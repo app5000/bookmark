@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS must come aftr jquery-->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<style>
+.business-card {
+  margin: 0 auto;
+  position: relative;
+  width: 600px;
+  height: 550px;
+  font-size: 12px;
+  font-family: 'Oswald', sans-serif,'roboto';
+  text-align: left;
+  color: black;
+  background: white;
+  box-shadow: 0 0 4px #999;
+  overflow: hidden;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 10px;
+}
+
+.business-card .background-stripes {
+  position: relative;
+  background: #fff;
+}
+
+.business-card .background-stripes .stripe {
+  position: absolute;
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  -webkit-transform-origin: 100% 100%;
+  -moz-transform-origin: 100% 100%;
+  -o-transform-origin: 100% 100%;
+  -ms-transform-origin: 100% 100%;
+  transform-origin: 100% 100%;
+  box-shadow: 0 0 2px #999;
+}
+
+.business-card .background-stripes .stripe-1 {
+  width: 400px;
+  height: 200px;
+  left: -40px;
+  top: -24px;
+  background: white;
+}
+
+.business-card header {
+  text-align: center;
+  position: relative;
+  font-size: .50em;
+  z-index: 999;
+  font-family: 'TimesNewRoman';
+  color: #222;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.25), 0 -1px 0 rgba(0,0,0,0.25);
+}
+
+.business-card footer {
+  text-align: center;
+  position: relative;
+  top:0px;
+  /*bottom: -14px;*/
+  font-family: 'TimesNewRoman';
+  font-size: .50em;
+  letter-spacing: 1px;
+}
+
+.business-card footer span.contact-title {
+  background: rgba(255,255,255,0.5);
+  margin-top: 8px;
+  box-shadow: 0 0 2px #ccc, inset 0 0 0px #aaa;
+  padding: 2px;
+}
+
+.business-card footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+.business-card footer ul li {
+  text-shadow: 0 1px 0 rgba(255,255,255,0.25), 0 -1px 0 rgba(0,0,0,0.25);
+  font-size: .1.0em;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="row" id="wrapper" style="height:1960px;margin-left:0px;padding:20px;overflow-y:scroll;color:black;border-left:1px solid #efefef;border-top:1px solid #efefef;background-color:white;">
+
+<div class="business-card" style="text-align:center;">
+    <br>
+<h5>Bookmark the Page</h5>
+<br>
+<form action="{{ url_for('saveBookmarks') }}" method="POST">
+<p style="font-size:16px;">URL:&nbsp;<span style="color:orange;">*</span>&nbsp;<input type="text" id="addurls" name="addurls" style="width:500px;font-size:16px;font-family:roboto;" required placeholder="copy and paste full web page url"/></p>
+<p style="font-size:16px;">Title:&nbsp;<span style="color:orange;">*</span>&nbsp;<input type="text" id="addtitles" name="addtitles" style="width:500px;font-size:16px;font-family:roboto;" required placeholder="copy and paste web page title"/></p>
+<br>
+<p style="font-size:16px;">Project:&nbsp;<input type="text" id="addprojectrefs" name="addprojectrefs" style="display:none;"/>
+<input type="text" id="addprojectnames" name="addprojectnames" style="width:450px;font-size:16px;font-family:roboto;" placeholder="select a project"/>
+<select id="project" style="width:10px;margin-left:-25px;margin-top:5px;border:none;">
+    {% for projectid, projectname in projectlist.items() %}
+<option id="project" value="{{projectid}}">{{projectname}}</option>
+    {% endfor %}
+</select></p>
+<br>
+<p style="font-size:16px;">Customer:&nbsp;<input type="text" id="addcustomerrefs" name="addcustomerrefs" style="display:none;"/>
+<input type="text" id="addcustomernames" name="addcustomernames" style="width:450px;font-size:16px;font-family:roboto;" placeholder="select a customer"/>
+<select id="customer" style="width:10px;margin-left:-25px;margin-top:5px;border:none;">
+    {% for customerid, customername in customerlist.items() %}
+<option id="customer" value="{{customerid}}">{{customername}}</option>
+    {% endfor %}
+</select></p>
+<br>
+    <p>Additional Information</p>
+    <p><div style="margin-top:5px;display:inline-block;">
+<input type="text" style="width:75px;height:30px;display:block;border:1px solid #c3c3c3;" id="addloc5" name="addloc5" placeholder="status"/>
+<select id="status" name="addkey5" style="width:75px;height:30px;display:block;">
+    <option id="status" selected=selected value="NONE">none</option>
+    <option id="status" value="UNREAD">unread</option>
+    <option id="status" value="PARTIAL">partial</option>
+    <option id="status" value="ONCE">once</option>
+    <option id="status" value="MANY">many</option>
+    <option id="status" value="REPEAT">read again</option>
+    <option id="status" value="GOOD">good</option>
+    <option id="status" value="EXCELLENT">excellent</option>
+    <option id="status" value="SAVE">save</option>
+</select>
+    </div>
+    <div style="margin-top:5px;display:inline-block;">
+<input type="text" style="width:75px;height:30px;display:block;border:1px solid #c3c3c3;" id="addloc6" name="addloc6" placeholder="relevance"/>
+<select id="relevant" name="addkey6" style="width:75px;height:30px;display:block;">
+    <option id="relevant" selected value="NONE">none</option>
+    <option id="relevant" value="EXTREME">extreme</option>
+    <option id="relevant" value="HIGH">high</option>
+    <option id="relevant" value="MEDIUM">medium</option>
+    <option id="relevant" value="LOW">low</option>
+</select>
+    </div></p>
+        
+<br>
+<div class="col-sm-3"></div>
+<button type='submit' class='bookmarkbutton' id="savebookmark" name="savebookmark">Bookmark</button>
+</form>
+</div>
+
+</div>
+
+<!--Bookmark-->
+<script>
+  function getUrls(){
+   var urlEnd = document.URL.indexOf('?');
+   var values = new Array();
+   var names;
+
+   if (urlEnd != -1){
+    var params = document.URL.substring(urlEnd+1, document.URL.length).split('&');
+    for(i=0; i<params.length; i++) {
+     names = params[i].split('=');
+     values[names[0]] = names[1];
+    }
+   }
+   return values;
+  }
+  values = getUrls();
+  var url = unescape(values["url"]);
+$(function(){
+  $('#addurls').val(url);
+});
+</script>
+
+<script>
+  function getTitles(){
+   var titleEnd = document.title.indexOf('&');
+   var titles = new Array();
+   var names;
+
+   if (titleEnd != -1){
+    var params = document.title.substring(titleEnd+1, document.title.length).split('main_body');
+    for(i=0; i<params.length; i++) {
+     names = params[i].split('=');
+     titles[names[0]] = names[1];
+    }
+   }
+   return titles;
+  }
+  titles = getTitles();
+  var title = unescape(titles["title"]);
+$(function(){
+  $('#addtitles').val(title);
+});
+</script>
+
+
+<script>
+display = document.getElementById("addloc5");
+contentselect = document.getElementById("status");
+
+contentselect.onchange = function(){
+    var show = contentselect.options[contentselect.selectedIndex].innerHTML
+            display.value = show;
+    }
+</script>
+
+
+<script>
+display = document.getElementById("addloc6");
+contentselect = document.getElementById("relevant");
+
+contentselect.onchange = function(){
+    var show = contentselect.options[contentselect.selectedIndex].innerHTML
+            display.value = show;
+    }
+</script>
+
+
+<script>
+textfield1 = document.getElementById("addprojectrefs");
+display1 = document.getElementById("addprojectnames");
+contentselect1 = document.getElementById("project");
+
+contentselect1.onchange = function(){
+    var text1 = contentselect1.options[contentselect1.selectedIndex].value
+    var show1 = contentselect1.options[contentselect1.selectedIndex].innerHTML
+        
+            textfield1.value = text1;
+            display1.value = show1;
+
+    }
+</script>
+
+
+<script>
+textfield2 = document.getElementById("addcustomerrefs");
+display2 = document.getElementById("addcustomernames");
+contentselect2 = document.getElementById("customer");
+
+contentselect2.onchange = function(){
+    var text2 = contentselect2.options[contentselect2.selectedIndex].value
+    var show2 = contentselect2.options[contentselect2.selectedIndex].innerHTML
+        
+            textfield2.value = text2;
+            display2.value = show2;
+
+    }
+</script>
+
+
+</body>
+</html>
+
+
+

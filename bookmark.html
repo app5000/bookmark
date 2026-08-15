@@ -1,0 +1,487 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS must come aftr jquery-->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">  <!--this is needed-->
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>    <!-- works without loading this line, maybe manual install bootstrap worked-->
+
+
+<style>
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+strong {
+  font-weight: bold;
+}
+
+.product-container {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.product-list {
+  width: 100%;
+  float: left;
+}
+
+.product-list li{
+  float: left;
+  margin: 0 10px 20px 0;
+}
+
+.product {
+  width: 220px;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-image {
+  width: 210px;
+  height: auto;
+  display: block;
+}
+
+.product img {
+  max-width: 210px;
+}
+
+.quick-view-controller {
+	float: left;
+	width: 110%;
+	position: absolute;
+	height: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    color: black;
+	background-color: #999;
+	opacity: 0.8;
+	bottom: 0px;
+    margin-left:-5px;
+}
+
+.quick-view-controller p {
+  float: left;
+  margin: 1px 0px 1px 15px;
+}
+
+.quick-view-controller p button {
+  padding: 2px 15px;
+  background-color: #FFF;
+  float: left;
+}
+
+.quick-view-controller p a {
+  padding: 2px 15px;/*10px 15px;*/
+  background-color: #FFF;
+  float: left;
+}
+
+.btn-view {
+ color: #222;
+}
+
+.btn-add {
+ color: #222;
+}
+
+.mask {
+	background-color: #000;
+    background-color:#505050;
+	height: 2000px;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	display: none;
+	z-index: 9998;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+}
+
+.maskadd {
+	background-color: #000;
+    background-color:#505050;
+	height: 2000px;
+	left: 0;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	display: none;
+	z-index: 9998;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
+	opacity: 0.5;
+}
+
+.quick-view-pop-up {
+	display: none;
+	background: #fff;
+	border: 1px solid #999;
+	z-index: 9999;
+	position: absolute;
+	top: 2%;
+	left: 25%;
+	min-height: 400px;
+	min-width: 820px;
+    padding-bottom:50px;
+}
+
+.quick-add-pop-up {
+	display: none;
+	background: #fff;
+	border: 1px solid #999;
+	z-index: 9999;
+	position: absolute;
+	top: 2%;
+	left: 25%;
+	min-height: 400px;
+	min-width: 820px;
+    padding-bottom:50px;
+}
+
+.quick-view-panel {
+  z-index: 10000;
+}
+
+.quick-add-panel {
+  z-index: 10000;
+}
+
+.quick-view-loading {
+  width: 100%;
+  float: left;
+  display: none;
+}
+
+.mini-carousel, .carousel {
+  float: left;
+}
+
+.mini-carousel {
+	margin: 22px 0 0 10px;
+	float: left;
+	width: 97px;
+	height: 354px;
+	overflow: hidden;
+	display: block;
+	white-space: nowrap;
+	position: relative;
+	top: 0px;
+}
+
+.mini-carousel ul {
+  float: left;
+  width: 97px;
+  display: block;
+  top: 0;
+  position: relative;
+}
+
+.mini-carousel ul li {
+  float: left;
+  margin-bottom: 10px; 
+  width: 97px;
+  height: 115px;
+  top: 0;
+  position: relative;
+}
+
+.carousel {
+  float: left;
+  position: relative;
+  left: 3px;
+  top: 6px;
+  padding-left: 9px;
+  display: block;
+}
+
+.image-large {
+  float: left;
+  top: 10px;
+  width: 290px;
+  overflow: hidden;
+  display: block;
+  left: 0;
+}
+
+.image-large ul {
+  margin: 0 0 0 0;
+  list-style: none;
+  width: 1180px;
+  height: 370px;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel ul li{
+  float: left;
+  margin: 0;
+}
+
+.video-player {
+  width: 290px;
+  height: 370px;
+  display: none;
+  position: absolute;
+  top: 10px;
+}
+
+.video-player iframe {
+  display: block;
+  float: left;
+  margin-left: 50px;
+}
+
+a.prev {
+  position: absolute;
+  top: 170px;
+  left: 8px;
+  height: 35px;
+  width: 36px;
+}
+
+a.next {
+  position: absolute;
+  top: 170px;
+  right: -10px;
+  width: 36px;
+  height: 36px;
+}
+
+.quick-view-close {
+	right: 6px;
+	top: 6px;
+	width: 5px;
+	cursor: pointer;
+	height: 24px;
+	background-position-x: -78px;
+}
+
+.quick-add-close {
+	right: 6px;
+	top: 6px;
+	width: 5px;
+	cursor: pointer;
+	height: 24px;
+	background-position-x: -78px;
+}
+
+.quick-view-video {
+  position: absolute;
+  bottom: 0;
+  right: 0px;
+  height: 26px;
+  width: 90px;
+}
+.detail {
+  width: 315px;
+  float: left;
+  margin: 40px 31px 40px 31px;
+  
+}
+.product-details {
+  margin-bottom: 20px;
+  float: left;
+}
+.product-name {
+  margin-bottom: 20px;
+}
+.product-price {
+  margin-bottom: 20px;
+}
+.orange {
+  margin-bottom: 15px;
+  width: 100%;
+  background-color: #d35400;
+  color: #FFF;
+  padding: 9px 21%;
+  text-align: center;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+.grey {
+  margin-top: 20px;
+  float: left;
+  width: 220px;
+  padding: 3%;
+  background-color: #CCC;
+  color: #FFF;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 10px;
+}
+.option-dropdowns {
+  margin-bottom: 20px;
+}
+.buttons {
+  margin-bottom: 20px;
+}
+a.view-more-detail {
+  float: left;
+  width: 81%;
+  background-color: #356890;
+  padding: 5% 5%;
+  text-transform: uppercase;
+  text-align: center;
+  color: #FFF;
+}
+</style>
+
+<style>
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table thead th, .table thead td {
+    height: 25px;
+    padding: 2px;
+    border: 1px solid #ccc;
+    text-align: center;
+    color: #707070;
+    white-space: nowrap; 
+}
+
+.table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: white;
+}
+
+.table thead td {
+    overflow: hidden;
+}
+</style>
+
+<style>
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.resizable-table {
+    width: 100%;
+    max-width: 200%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.resizable-table th, .resizable-table td {
+    padding: 2px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.resizer {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+    cursor: col-resize;
+    user-select: none;
+    background-color: transparent;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="row" id="wrapper" style="height:1960px;margin:0px;padding:0px;border-left:1px solid #efefef;border-top:1px solid #efefef;border-right:1px solid #efefef;background-color:white;">
+
+<div class="row" id="bookmark" style="width:100%;height:100%;margin:0px;overflow-y:scroll;border:1px solid #efefef;">
+       
+<div class="table-container table-responsive" style="height:1960px;">
+    <table class="table table-hover resizable-table">
+    <thead class="thead-light">
+        <tr class="d-flex">
+            <th style="width:400px;text-align:left;">Name</th>
+            <th style="width:100px;">Description</th>
+            <th style="width:100px;">URL</th>
+            <th style="width:85px;">Status</th>
+            <th style="width:85px;">Upload</th>
+            <th style="width:75px;">Author</th>
+            <th style="width:100px;">Share</th>
+            <th style="width:100px;">Project</th>
+            <th style="width:100px;">Customer</th>
+        </tr>
+
+    {% for bkid, bookmark in bookmarklist.items() %}
+        {% set bkname = bookmark.get('filename') %}
+        {% set bkurl = bookmark.get('fileurl') %}
+        {% set comment = bookmark.get('comment') %}
+        {% set status = bookmark.get('status') %}
+        {% set projectid = bookmark.get('projectid') %}
+        {% set customerid = bookmark.get('customerid') %}
+       
+        <tr>
+            <td style="text-align:left;">
+        <a href="{{url_for('showbookmark', files=bkid)}}"><span title="{{bkname}}">{{bkname}}</span></a>
+            </td>
+            <td>
+            <span style="text-align:left;" title="{{ comment }}">{{ comment }}</span>
+            </td>
+            <td>
+        <a href="{{bkurl}}" style="text-align:left;" title="{{url}}">{{bkurl}}</a>
+            </td>
+            <td><span title="{{status}}">{{status}}</span></td>
+            <td>
+        <span></span>
+            </td>
+            <td><span title="{{author}}">{{author}}</span></td>
+
+            <td>
+        <a href="{{url_for('showproject', project=projectid)}}" title="projectname">{{projectid}}</a>
+            </td>
+            <td>
+        <a href="{{url_for('showcustmer', files=customerid)}}" title="customername">{{customerid}}</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </thead>
+    </table>
+
+</div>
+
+</div>
+</div>
+
+
+</body>
+
